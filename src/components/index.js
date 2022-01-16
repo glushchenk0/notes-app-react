@@ -9,3 +9,4 @@ export * from './SummaryTable/SummaryTable.jsx';
 export * from './SummaryTableHeader/SummaryTableHeader.jsx';
 export * from './SummaryList/SummaryList.jsx';
 export * from './SummaryItem/SummaryItem.jsx';
+export * from './AddForm/AddForm.jsx';

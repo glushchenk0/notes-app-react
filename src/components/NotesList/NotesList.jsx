@@ -1,13 +1,12 @@
 import React from 'react';
 import { NoteItem } from '../../components';
 
-export const NotesList = ({ children, ...props }) => {
+export const NotesList = ({ notes, children, ...props }) => {
     return (
         <>
-            <NoteItem />
-            <NoteItem />
-            <NoteItem />
-            <NoteItem />
+            {notes.map((note) => (
+                <NoteItem key={note.id} {...note} />
+            ))}
         </>
     );
 };
