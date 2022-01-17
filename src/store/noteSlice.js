@@ -9,7 +9,7 @@ const noteSlice = createSlice({
             {
                 id: 0,
                 name: 'B-day',
-                updated: new Date(2021, 2, 30),
+                updated: '2021, 2, 30',
                 category: 'Task',
                 content: 'Holiday',
                 dateslist: '',
@@ -18,7 +18,7 @@ const noteSlice = createSlice({
             {
                 id: 1,
                 name: 'Shopping List',
-                updated: new Date(2021, 3, 20),
+                updated: '2021, 3, 20',
                 category: 'Task',
                 content: 'Tomatoes, bread',
                 dateslist: '',
@@ -27,7 +27,7 @@ const noteSlice = createSlice({
             {
                 id: 2,
                 name: 'The theory of evolution',
-                updated: new Date(2021, 3, 27),
+                updated: '2021, 3, 27',
                 category: 'Random Thought',
                 content:
                     'The evolution evolution  evolution  evolution  evolution  evolution.',
@@ -37,7 +37,7 @@ const noteSlice = createSlice({
             {
                 id: 3,
                 name: 'New Feature',
-                updated: new Date(2021, 4, 5),
+                updated: '2021, 4, 5',
                 category: 'Idea',
                 content: 'Implement new feature 3/5/2021',
                 dateslist: '3/5/2021, 5/5/2021',
@@ -46,7 +46,7 @@ const noteSlice = createSlice({
             {
                 id: 4,
                 name: 'William Gaddis',
-                updated: new Date(2021, 4, 7),
+                updated: '2021, 4, 7',
                 category: 'Random Thought',
                 content: 'Power doesn`t counted...',
                 dateslist: '',
@@ -55,7 +55,7 @@ const noteSlice = createSlice({
             {
                 id: 5,
                 name: 'Books',
-                updated: new Date(2021, 4, 15),
+                updated: '2021, 4, 15',
                 category: 'Task',
                 content: 'The Lean Startup',
                 dateslist: '',
@@ -64,7 +64,7 @@ const noteSlice = createSlice({
             {
                 id: 6,
                 name: 'Redesign',
-                updated: new Date(2021, 4, 20),
+                updated: '2021, 4, 20',
                 category: 'Idea',
                 content: 'Change UI/UX',
                 dateslist: '',
@@ -73,7 +73,7 @@ const noteSlice = createSlice({
             {
                 id: 7,
                 name: 'ARCHIVED | B-day',
-                updated: new Date(2021, 2, 30),
+                updated: '2021, 2, 30',
                 category: 'Task',
                 content: 'Holiday',
                 dateslist: '',
@@ -96,9 +96,9 @@ const noteSlice = createSlice({
                 : '';
             if (existing) {
                 existing.name = action.payload.name;
-                existing.content = action.payload.content;
-                existing.updated = action.payload.toISOString();
+                existing.updated = currentDate.toISOString();
                 existing.category = action.payload.category;
+                existing.content = action.payload.content;
                 existing.dateslist = datesList;
             } else {
                 const noteToSave = {
@@ -115,8 +115,30 @@ const noteSlice = createSlice({
 
             LocalStorageService.write(state.notes);
         },
-        deleteNote(state, action) {},
-        archiveNote(state, action) {},
+        deleteNote(state, action) {
+            console.log('action.payload.id - ', action.payload.id);
+            let index = -1;
+            for (let i = 0; i < state.notes.length; i++) {
+                if (state.notes[i].id === action.payload.id) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index > -1) {
+                state.notes.splice(index, 1);
+            } else {
+                throw new Error('указан не верный ID');
+            }
+            state.notes.filter((note) => note.id !== action.payload.id);
+        },
+        archiveNote(state, action) {
+            console.log('action.payload.id - ', action.payload.id);
+            const existing = state.notes.find(
+                (note) => note.id === action.payload.id
+            );
+            existing.updated = new Date().toISOString();
+            existing.archived = !existing.archived;
+        },
     },
 });
 
