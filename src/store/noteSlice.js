@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import LocalStorageService from '../services/LocalStorageService';
 import Helper from '../helpers/helpres';
 
 const noteSlice = createSlice({
@@ -112,8 +111,6 @@ const noteSlice = createSlice({
                 };
                 state.notes.push(noteToSave);
             }
-
-            LocalStorageService.write(state.notes);
         },
         deleteNote(state, action) {
             console.log('action.payload.id - ', action.payload.id);

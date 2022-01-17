@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { NotesList, TableRowContainer, TableColLayout } from '../../components';
 
-export const AchivedNotes = () => {
+export const AchivedNotes = ({ activeNote }) => {
     const notes = useSelector((state) => state.notes.notes);
     const archivedNotes = notes
         .filter((note) => note.archived === true)
@@ -17,7 +17,7 @@ export const AchivedNotes = () => {
             >
                 <TableColLayout />
             </TableRowContainer>
-            <NotesList notes={archivedNotes} />
+            <NotesList notes={archivedNotes} activeNote={activeNote} />
         </>
     );
 };

@@ -9,21 +9,22 @@ import {
     AddForm,
 } from './components';
 function App() {
+    const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [category, setCategory] = useState('Random Thought');
     const [content, setContent] = useState('');
     const [activeNote, setActiveNote] = useState('');
-    console.log('activeNote--', activeNote);
-    // useEffect(() => {
-    //     setName(activeNote.name);
-    //     setName(setCategory.category);
-    //     setName(setContent.content);
-    // }, [activeNote]);
+    useEffect(() => {
+        setId(activeNote.id);
+        setName(activeNote.name);
+        setCategory(activeNote.category);
+        setContent(activeNote.content);
+    }, [activeNote]);
     const dispatch = useDispatch();
     const handleAction = (e) => {
         e.preventDefault();
         if (name.trim().length) {
-            dispatch(saveNote({ name, category, content }));
+            dispatch(saveNote({ id, name, category, content }));
             setName('');
             setCategory('Random Thought');
             setContent('');
@@ -34,6 +35,7 @@ function App() {
             <Layout>
                 <ActiveNotes activeNote={setActiveNote} />
                 <AddForm
+                    id={id}
                     name={name}
                     updateName={setName}
                     category={category}
@@ -43,7 +45,7 @@ function App() {
                     handleAction={handleAction}
                 />
                 <SummaryTable />
-                <AchivedNotes />
+                <AchivedNotes activeNote={setActiveNote} />
             </Layout>
         </>
     );
